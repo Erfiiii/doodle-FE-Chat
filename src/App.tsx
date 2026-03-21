@@ -1,7 +1,12 @@
+import { Chat } from './chat'
 import { AuthGuard } from './core/auth/AuthGuard'
 
 function App() {
-  return <AuthGuard>Chat Component</AuthGuard>
+  return (
+    <AuthGuard>
+      <Chat />
+    </AuthGuard>
+  )
 }
 
 export default App
