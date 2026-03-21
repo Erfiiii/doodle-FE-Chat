@@ -1,5 +1,7 @@
+import { AuthGuard } from './core/auth/AuthGuard'
+
 function App() {
-  return <div>Chat App</div>
+  return <AuthGuard>Chat Component</AuthGuard>
 }
 
 export default App
