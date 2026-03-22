@@ -85,7 +85,7 @@ const reducer = (state: State, action: Action): State => {
   }
 }
 
-type MessagesContextType = {
+export type MessagesContextType = {
   state: State
   dispatch: Dispatch<Action>
 }

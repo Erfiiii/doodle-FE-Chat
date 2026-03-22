@@ -21,6 +21,7 @@ export function Messages(props: Props) {
         />
       )}
       {state.isLoading && <Loading />}
+      {/* virtualized list should be used */}
       {state.messages.map((item) => (
         <Message key={item._id} value={item} />
       ))}
