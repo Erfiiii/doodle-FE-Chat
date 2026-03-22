@@ -20,6 +20,7 @@ export function MessageInput(props: Props) {
   const { dispatch } = useMessages()
 
   const onSendMessage = useCallback(async () => {
+    if (!text) return
     try {
       const message = await sendMessage(text, user.name)
       dispatch({ type: 'ADD_MESSAGE', payload: { message } })
