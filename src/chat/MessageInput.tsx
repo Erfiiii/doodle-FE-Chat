@@ -1,4 +1,5 @@
 import {
+  memo,
   useCallback,
   useState,
   type KeyboardEvent,
@@ -14,7 +15,7 @@ interface OwnProps {}
 
 type Props = PropsWithChildren<OwnProps>
 
-export function MessageInput(props: Props) {
+export const MessageInput = memo((props: Props) => {
   const [text, setText] = useState<string>('')
   const user = useUserContext()
   const { dispatch } = useMessages()
@@ -63,4 +64,4 @@ export function MessageInput(props: Props) {
       </div>
     </div>
   )
-}
+})

@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from 'react'
+import { memo, type PropsWithChildren } from 'react'
 import { RefreshIcon } from 'src/assets'
 import { Button } from 'src/shared/ui/button'
 import { useGetNewMessages } from './useLoadNewMessages'
@@ -7,7 +7,7 @@ interface OwnProps {}
 
 type Props = PropsWithChildren<OwnProps>
 
-export function LoadNewMessages(props: Props) {
+export const LoadNewMessages = memo((props: Props) => {
   const onLoadNewMessages = useGetNewMessages()
 
   return (
@@ -21,4 +21,4 @@ export function LoadNewMessages(props: Props) {
       </Button>
     </div>
   )
-}
+})

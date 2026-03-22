@@ -1,4 +1,5 @@
 import { type PropsWithChildren } from 'react'
+import { useUserContext } from 'src/core/auth/UserProvider'
 import { Message } from './Message'
 import { useMessages } from './MessagesController'
 import { Loading } from 'src/shared/loading'
@@ -10,7 +11,7 @@ type Props = PropsWithChildren<OwnProps>
 
 export function Messages(props: Props) {
   const { state, dispatch } = useMessages()
-
+  const user = useUserContext()
   return (
     <div className="flex flex-col gap-4 p-6 md:w-3xl lg:w-5xl mx-auto">
       {state.error && (
@@ -23,7 +24,11 @@ export function Messages(props: Props) {
       {state.isLoading && <Loading />}
       {/* virtualized list should be used */}
       {state.messages.map((item) => (
-        <Message key={item._id} value={item} />
+        <Message
+          key={item._id}
+          value={item}
+          isUserMessage={item.author === user.name}
+        />
       ))}
     </div>
   )
