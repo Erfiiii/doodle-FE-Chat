@@ -2,17 +2,13 @@ import { useState, type KeyboardEvent, type PropsWithChildren } from 'react'
 import { Textarea } from 'src/shared/ui/textarea'
 import { Button } from 'src/shared/ui/button'
 
-interface OwnProps {
-  onSendMessage: (value: string) => void
-}
+interface OwnProps {}
 
 type Props = PropsWithChildren<OwnProps>
 
 export function MessageInput(props: Props) {
-  const { onSendMessage } = props
   const [text, setText] = useState<string>('')
   const sendMessage = () => {
-    onSendMessage(text)
     setText('')
   }
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
