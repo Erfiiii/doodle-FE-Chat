@@ -43,6 +43,9 @@ type Action =
         error: ApiError
       }
     }
+  | {
+      type: 'DISMISS_ERROR'
+    }
 
 const initialState: State = {
   messages: [],
@@ -75,6 +78,8 @@ const reducer = (state: State, action: Action): State => {
       }
     case 'SET_ERROR':
       return { ...state, error: action.payload.error, isLoading: false }
+    case 'DISMISS_ERROR':
+      return { ...state, error: undefined }
     default:
       return state
   }
