@@ -1,15 +1,23 @@
 import { useEffect } from 'react'
 import { getMessages, type ApiError } from 'src/core/client'
 import { useMessages } from './MessagesController'
+import { usePagination } from './PaginationController'
 
-export const useGetMessages = (queryParam?: string) => {
+export const useGetMessages = () => {
   const { dispatch } = useMessages()
+  const { state: paginationState, dispatch: paginationDispatch } =
+    usePagination()
+  const queryParam = `limit=${paginationState.limit}&before=${paginationState.before}`
   useEffect(() => {
     const fn = async () => {
       dispatch({ type: 'SET_LOADING', payload: true })
       try {
         const messages = await getMessages(queryParam)
-        dispatch({ type: 'SET_MESSAGES', payload: { messages } })
+        if (messages.length === 0) {
+          paginationDispatch({ type: 'SET_HAS_MORE', payload: false })
+          return
+        }
+        dispatch({ type: 'PREPEND_MESSAGES', payload: { messages } })
       } catch (error) {
         const { status, ...rest } = error as { status: number }
         dispatch({
@@ -23,5 +31,5 @@ export const useGetMessages = (queryParam?: string) => {
       }
     }
     fn()
-  }, [queryParam, dispatch])
+  }, [queryParam, dispatch, paginationDispatch])
 }
