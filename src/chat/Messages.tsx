@@ -1,6 +1,7 @@
 import { type PropsWithChildren } from 'react'
 import { Message } from './Message'
 import { useMessages } from './MessagesController'
+import { Loading } from 'src/shared/loading'
 
 interface OwnProps {}
 
@@ -10,6 +11,7 @@ export function Messages(props: Props) {
   const { state } = useMessages()
   return (
     <div className="flex flex-col gap-4 p-6 md:w-3xl lg:w-5xl mx-auto">
+      {state.isLoading && <Loading />}
       {state.messages.map((item) => (
         <Message key={item._id} value={item} />
       ))}
