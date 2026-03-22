@@ -1,0 +1,109 @@
+import type { ApiError } from 'src/core/client'
+import type { Message } from './types'
+import {
+  createContext,
+  useContext,
+  useMemo,
+  useReducer,
+  type Dispatch,
+  type PropsWithChildren,
+} from 'react'
+
+type State = {
+  messages: Message[]
+  isLoading: boolean
+  error: ApiError | undefined
+}
+
+type Action =
+  | {
+      type: 'SET_MESSAGES'
+      payload: {
+        messages: Message[]
+      }
+    }
+  | {
+      type: 'ADD_MESSAGE'
+      payload: {
+        message: Message
+      }
+    }
+  | {
+      type: 'PREPEND_MESSAGES'
+      payload: {
+        messages: Message[]
+      }
+    }
+  | {
+      type: 'SET_LOADING'
+      payload: boolean
+    }
+  | {
+      type: 'SET_ERROR'
+      payload: {
+        error: ApiError
+      }
+    }
+
+const initialState: State = {
+  messages: [],
+  isLoading: false,
+  error: undefined,
+}
+
+const reducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case 'SET_MESSAGES':
+      return { ...state, messages: action.payload.messages }
+    case 'ADD_MESSAGE':
+      return { ...state, messages: [...state.messages, action.payload.message] }
+    case 'PREPEND_MESSAGES':
+      return {
+        ...state,
+        messages: [...action.payload.messages, ...state.messages],
+      }
+    case 'SET_LOADING':
+      return {
+        ...state,
+        isLoading: action.payload,
+        error: action.payload ? undefined : state.error,
+      }
+    case 'SET_ERROR':
+      return { ...state, error: action.payload.error, isLoading: false }
+    default:
+      return state
+  }
+}
+
+type MessagesContextType = {
+  state: State
+  dispatch: Dispatch<Action>
+}
+
+const MessagesContext = createContext<MessagesContextType | undefined>(
+  undefined,
+)
+
+export const useMessages = () => {
+  const context = useContext(MessagesContext)
+
+  if (!context) {
+    throw new Error('useMessages should be used inside <MessagesController>')
+  }
+
+  return context
+}
+
+interface OwnProps {}
+
+type Props = PropsWithChildren<OwnProps>
+
+export function MessagesController(props: Props) {
+  const [state, dispatch] = useReducer(reducer, initialState)
+  const contextValue = useMemo(() => ({ state, dispatch }), [state])
+  return (
+    <MessagesContext.Provider value={contextValue}>
+      {props.children}
+    </MessagesContext.Provider>
+  )
+}
