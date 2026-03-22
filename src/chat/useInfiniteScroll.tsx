@@ -11,7 +11,7 @@ export function useInfiniteScroll() {
     const container = scrollContainerRef.current
     if (!container || !paginationState.hasMore) return
 
-    const thresholdPixels = container.scrollHeight * 0.2
+    const thresholdPixels = container.scrollHeight * 0.1
     if (container.scrollTop < thresholdPixels) {
       dispatch({
         type: 'UPDATE_CURSOR',

@@ -28,7 +28,7 @@ type Action =
       }
     }
   | {
-      type: 'PREPEND_MESSAGES'
+      type: 'ADD_MESSAGES'
       payload: {
         messages: Message[]
       }
@@ -59,7 +59,7 @@ const reducer = (state: State, action: Action): State => {
       return { ...state, messages: action.payload.messages }
     case 'ADD_MESSAGE':
       return { ...state, messages: [...state.messages, action.payload.message] }
-    case 'PREPEND_MESSAGES': {
+    case 'ADD_MESSAGES': {
       const messageMap = new Map(state.messages.map((m) => [m._id, m]))
       action.payload.messages.forEach((m) => messageMap.set(m._id, m))
       return {

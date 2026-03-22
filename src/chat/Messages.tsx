@@ -10,6 +10,7 @@ type Props = PropsWithChildren<OwnProps>
 
 export function Messages(props: Props) {
   const { state, dispatch } = useMessages()
+
   return (
     <div className="flex flex-col gap-4 p-6 md:w-3xl lg:w-5xl mx-auto">
       {state.error && (

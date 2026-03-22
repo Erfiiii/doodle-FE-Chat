@@ -17,7 +17,7 @@ export const useGetMessages = () => {
           paginationDispatch({ type: 'SET_HAS_MORE', payload: false })
           return
         }
-        dispatch({ type: 'PREPEND_MESSAGES', payload: { messages } })
+        dispatch({ type: 'ADD_MESSAGES', payload: { messages } })
       } catch (error) {
         const { status, ...rest } = error as { status: number }
         dispatch({

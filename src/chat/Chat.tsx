@@ -5,6 +5,7 @@ import { MessagesContainer } from './MessagesContainer'
 import { Messages } from './Messages'
 import { MessagesController } from './MessagesController'
 import { PaginationController } from './PaginationController'
+import { LoadNewMessages } from './LoadNewMessages'
 
 interface OwnProps {}
 
@@ -17,6 +18,7 @@ export function Chat(props: Props) {
         <PaginationController defaultLimit={10}>
           <MessagesContainer>
             <Messages />
+            <LoadNewMessages />
           </MessagesContainer>
         </PaginationController>
         <MessageInput />
