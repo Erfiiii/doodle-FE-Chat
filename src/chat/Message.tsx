@@ -1,7 +1,7 @@
 import type { PropsWithChildren } from 'react'
 import { DateOutput } from 'src/shared/date'
 import { useUserContext } from 'src/core/auth/UserProvider'
-import type { Message } from './types'
+import type { Message } from 'src/core/client'
 
 interface OwnProps {
   value: Message

@@ -1,5 +1,4 @@
-import type { ApiError } from 'src/core/client'
-import type { Message } from './types'
+import type { ApiError, Message } from 'src/core/client'
 import {
   createContext,
   useContext,
